@@ -5,16 +5,16 @@ Subtledata SXSW Demo Application
 
 Set the following variables to valid Subtledata IDs:
 
---API_KEY
---LOCATION_ID
---USER_ID
---DEVICE_ID
+- API_KEY
+- LOCATION_ID
+- USER_ID
+- DEVICE_ID
 
 ## License 
 
 (The MIT License)
 
-Copyright (c) 2012 Subtledata, Inc. &lt;george.sibble@subtledata.com&gt;
+Copyright (c) 2013 Subtledata, Inc. &lt;code@subtledata.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
