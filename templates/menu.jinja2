@@ -1,0 +1,151 @@
+{% extends 'base.jinja2' %}
+
+{% block style %}
+    <style type="text/css">
+        .footer {
+            padding-top: 20px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div class="wrapper">
+
+        <!-- Navigation -->
+        <nav class="top-bar fixed">
+            <img src="/static/foundation/images/logo.png"/>
+        </nav>
+        <!--End of Top Bar-->
+
+
+        <!-- Phone Title -->
+        <div class="row show-for-small">
+            <div class="twelve columns panel">
+                <h6>What beverage can we get for you?</h6>
+            </div>
+            <!--End of Twelve Columns-->
+        </div>
+        <!--End of Row-->
+
+
+        <!-- Tablet Title-->
+        <div class="row hide-for-small">
+            <div class="twelve columns panel">
+                <h3>Welcome to the SubtleData SXSW Demo</h3>
+                <h4>What beverage can we get for you this afternoon?</h4>
+            </div>
+            <!--End of Twelve Columns-->
+        </div>
+        <!--End of Row-->
+
+
+        <div class="row">
+            <div class="twelve columns">
+                <div class="row">
+
+
+                    {% for item in items%}
+                    <div item_id="{{ item.item_id }}" class="item four mobile-two columns panel">
+                        <img src="/static/foundation/images/thumb-{{ loop.index0 }}.png" class="thumb"/>
+                    </div>
+                    {% endfor %}
+
+{##}
+{#                    <div class="item four mobile-two columns panel">#}
+{#                        <img src="/static/foundation/images/thumb-aquafina.png" class="thumb"/>#}
+{#                    </div>#}
+{##}
+{#                    <div class="item four mobile-two columns panel">#}
+{#                        <img src="/static/foundation/images/thumb-nothing.png" class="thumb"/>#}
+{#                    </div>#}
+
+
+                </div>
+                <!--End of Row-->
+            </div>
+            <!--End of Twelve Columns-->
+        </div>
+        <!--End of Row-->
+
+
+    <form id="orderForm" name="ordering" action="/order" method="POST">
+            <!-- Phone Title -->
+            <div class="row">
+                <div class="twelve columns panel">
+                    <h5>What’s your seat number?</h5>
+                    <input id="seat_number" type="text" class="four columns push-four" placeholder="Seat Number" name="seat_number"/>
+                </div>
+                <!--End of Twelve Columns-->
+            </div>
+            <!--End of Row-->
+
+            <select id="ordered_item" class="hide" name="ordered_item">
+
+                {% for item in items %}
+                    <option value={{ item.item_id }}>{{ item.item_id }}</option>
+                {% endfor %}
+
+            </select>
+
+
+            <!-- Footer
+            <footer class="row">
+
+                <div class="twelve columns">
+                    <a class="button four columns push-four">Submit</a>
+                </div>
+
+            </footer>
+            End Footer -->
+
+
+
+            <!-- Navigation -->
+            <div class="footer wrapper">
+                <div class="row">
+                    <div class="twelve columns">
+                        <a id="formSubmit" class="button six columns push-three disabled" href="#">Place Order</a>
+                    </div>
+                    <!--End of Twelve Columns -->
+                </div>
+                <!-- End of Row -->
+            </div>
+            <!-- End of Top Bar -->
+    </form>
+
+
+    </div><!-- End of Wrapper -->
+
+{% endblock %}
+
+{% block js %}
+    <script type='text/javascript'>
+
+        $('.item').click(function clickedItem() {
+
+            $(this).animate({ 'opacity' : 1.0});
+
+            $('.selectedItem').removeClass('selectedItem').addClass('.item').animate({'opacity' : 0.2}, 200);
+            $(this).addClass('selectedItem').removeClass('item');
+            var item_id = $(this).attr('item_id');
+            console.log(item_id);
+            $('#ordered_item').val(item_id);
+
+            var unselectedItems = $('.item');
+
+            $(unselectedItems).animate({ 'opacity' : 0.2 }, 200);
+
+        });
+
+    $('#formSubmit').click(function submitForm(){
+       $('#orderForm').submit();
+    });
+
+    $('#seat_number').change(function onSeatEntry(){
+        $("#formSubmit").removeClass("disabled");
+    });
+
+    </script>
+{% endblock %}
