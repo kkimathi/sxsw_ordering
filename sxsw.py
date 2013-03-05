@@ -1,19 +1,11 @@
-__author__ = 'gsibble'
-
-from flask import Flask, render_template, request, jsonify
-import subtledata, ParsePy
+from flask import Flask, render_template, request
+import subtledata
 
 SD = subtledata.SubtleData('QVorMkxG', testing=True)
 DEV_GARAGE = SD.Locations.get(448, include_menu=True)
 
 APP = Flask(__name__)
 APP.debug = True
-
-PARSE_APPLICATION_ID = 'YXwilKbfpLLPoqAOyw7ku9uIcds0ZYgymc2KexeF'
-PARSE_MASTER_KEY = 'Tg0zw6Hp4sjPpDJqLXRqb0ds4e6IcvRpgEqfhDPI'
-
-ParsePy.APPLICATION_ID = PARSE_APPLICATION_ID
-ParsePy.MASTER_KEY = PARSE_MASTER_KEY
 
 @APP.route('/', methods=['GET'])
 def show_homepage():
@@ -38,17 +30,3 @@ def take_order():
         ordered_item = None
 
     return render_template('email.jinja2', item_id=ordered_item)
-
-@APP.route('/email')
-def record_email():
-
-    new_email = ParsePy.ParseObject('email_address')
-
-    new_email.email = request.args['email']
-
-    new_email.save()
-
-    return jsonify({'status':'SUCCESS'})
-
-if __name__ == '__main__':
-    APP.run('0.0.0.0')
