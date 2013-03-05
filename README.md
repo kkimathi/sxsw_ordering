@@ -1,7 +1,5 @@
-sxsw_ordering
+Subtledata SXSW Demo Application
 =============
-
-SXSW Ordering App
 
 ## To Use
 
