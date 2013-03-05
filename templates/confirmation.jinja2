@@ -1,0 +1,92 @@
+{% extends 'base.jinja2' %}
+
+    {% block style %}
+
+	<style type="text/css">
+		.footer, .push { height: 240px; }
+	</style>
+    {% endblock %}
+
+
+
+{% block body %}
+<div class="wrapper">
+
+
+    <!-- Navigation -->
+    <nav class="top-bar fixed">
+    	<img src="/static/foundation/images/logo.png" />
+	</nav><!--End of Top Bar-->
+
+
+	<!-- Phone Title -->
+	<div class="row show-for-small">
+        <div class="twelve columns panel">
+			<h5>Nice choice!</h5>
+            <h6>Your Budweiser is on its way.</h6>
+		</div><!--End of Twelve Columns-->
+	</div><!--End of Row-->
+
+
+	<!-- Tablet Title-->
+    <div class="row hide-for-small">
+        <div class="twelve columns panel">
+			<h3>Nice choice!</h3>
+            <h4>Your Budweiser is on its way.</h4>
+		</div><!--End of Twelve Columns-->
+	</div><!--End of Row-->
+
+
+
+    <div class="row" style="padding: 0 0 10px 0;">
+        <div class="twelve columns">
+        	<div class="four columns centered mobile-two pull-one-mobile panel">
+            	<a href=""><img src="/static/foundation/images/thumb-budweiser.png" class="thumb" /></a>
+            </div>
+        </div><!--End of Twelve Columns-->
+    </div><!--End of Row-->
+
+
+
+</div><!-- End of Wrapper -->
+
+
+
+
+
+	<!-- Footer -->
+    <div class="footer">
+
+        <div id="confirm">
+
+            <div class="row">
+
+                <!-- Phone Title -->
+                <div class="row show-for-small panel">
+                    <div class="twelve columns">
+                        <h5>Just like that...</h5>
+                        <h6>Thanks for attending the SubtleData demo at SXSW!</h6>
+                    </div><!--End of Twelve Columns-->
+                </div><!--End of Row-->
+
+
+                <!-- Tablet Title-->
+                <div class="row hide-for-small panel">
+                    <div class="twelve columns">
+                        <h3>Just like that...</h3>
+                        <h4>Thanks for attending the SubtleData demo at SXSW!</h4>
+                    </div><!--End of Twelve Columns-->
+                </div><!--End of Row-->
+
+            </div><!--End of Row-->
+
+        </div>
+
+
+	</div><!-- End of Footer -->
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

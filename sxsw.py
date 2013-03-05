@@ -1,32 +1,87 @@
+"""
+Subtledata SXSW Demo Application
+
+To Use:
+
+Set the following variables to valid Subtledata IDs:
+
+--API_KEY
+--LOCATION_ID
+--USER_ID
+--DEVICE_ID
+
+"""
+
 from flask import Flask, render_template, request
 import subtledata
 
-SD = subtledata.SubtleData('QVorMkxG', testing=True)
-DEV_GARAGE = SD.Locations.get(448, include_menu=True)
-
+#Initialize Flask
 APP = Flask(__name__)
+
+#Turn on debugging to make life easier
 APP.debug = True
 
+#Set our API key to our Subtledata Web API
+API_KEY = '@@@@@@@'
+
+#Set our location ID
+LOCATION_ID = 12345
+
+#We will need a valid user ID and device ID to submit orders
+USER_ID = 12345
+DEVICE_ID = 12345
+
+#Initialize the Subtledata Library with our API Key
+SD = subtledata.SubtleData(API_KEY)
+
+#Fetch our location since we will need it for all calls
+DEV_GARAGE = SD.Locations.get(LOCATION_ID, include_menu=True)
+
+#Main Route to show the menu
 @APP.route('/', methods=['GET'])
 def show_homepage():
+    """
+    Show homepage will present the menu to our user
 
+    :return: Template(Menu.jinja2)
+    """
+
+    #Get the items we want to display
     items = DEV_GARAGE.menu.get_category(category_name='Bottle Beer').items
 
+    #Display our menu and associated items
     return render_template("menu.jinja2", items=items[0:4])
 
-@APP.route('/order', methods=['GET', 'POST'])
+#POST route to accept and create the order
+@APP.route('/order', methods=['POST'])
 def take_order():
+    """
+    Receive our order and process it
 
-    if request.method == 'POST':
-        seat_number = request.form['seat_number']
-        ordered_item = request.form['ordered_item']
+    :return: Template(confirmation.jinja2)
+    """
 
-        new_ticket = DEV_GARAGE.tables[0].open_ticket(1657, 1977, custom_ticket_name='Seat ' + str(seat_number))
+    #Set our seat number from the form
+    seat_number = request.form['seat_number']
 
-        new_ticket.add_item_to_order(ordered_item, 1)
-        new_ticket.submit_order()
+    #Set our ordered item from the form
+    ordered_item = request.form['ordered_item']
 
-    else:
-        ordered_item = None
+    #Open a new ticket using our user and device ID
+    #Set its ticket name to a custom value so that we know which seat to go to
+    new_ticket = DEV_GARAGE.tables[0].open_ticket(USER_ID,
+                        DEVICE_ID,
+                        custom_ticket_name='Seat ' + str(seat_number))
 
-    return render_template('email.jinja2', item_id=ordered_item)
+    #Add (stage) one of our items to our order
+    new_ticket.add_item_to_order(ordered_item, 1)
+
+    #Submit our order for processing
+    new_ticket.submit_order()
+
+    #Return the confirmation
+    return render_template('confirmation.jinja2', item_id=ordered_item)
+
+#Start Flask
+if __name__ == '__main__':
+    APP.run('0.0.0.0')
